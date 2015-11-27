@@ -1,5 +1,6 @@
 package com.ashwin.tripcluster;
 
+import android.database.Cursor;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,8 +20,9 @@ import java.util.concurrent.ExecutionException;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    public static double latitude;
-    public static double longitude;
+    //public static double latitude;
+    //public static double longitude;
+    LocationDBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +36,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        URL url = null;
-        try {
-            url = new URL("https://maps.googleapis.com/maps/api/geocode/json?address=Mason+Ohio&key=AIzaSyCSGwVHDPWVzs795rAX2sOngeYalf64Z0g");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
+        Double latitude;
+        Double longitude;
+        LatLng location = null;
+        dbHelper = new LocationDBHelper(getApplicationContext());
+        Cursor cursor  = dbHelper.getLocations();
+        while(cursor.moveToNext()){
+            latitude = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(dbHelper.COLUMN_LAT)));
+            longitude = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(dbHelper.COLUMN_LONG)));
+            location = new LatLng(latitude, longitude);
+            mMap.addMarker(new MarkerOptions().position(location).title("Marker"));
         }
-        try {
-            new GetCoordinates().execute(url).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        Log.v("Lat", String.valueOf(latitude));
-        Log.v("Long", String.valueOf(longitude));
-        LatLng sydney = new LatLng(latitude, longitude);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 7.0f));
     }
 }

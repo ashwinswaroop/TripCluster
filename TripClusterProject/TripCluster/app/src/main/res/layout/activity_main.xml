@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editLocation"
-        android:layout_marginTop="85dp"
         android:inputType="text"
+        android:autoText="false"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:autoText="false" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
@@ -23,7 +23,9 @@
         android:text="Add location to trip"
         android:id="@+id/addLocation"
         android:layout_below="@+id/editLocation"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="10dp" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -39,6 +41,17 @@
         android:layout_height="wrap_content"
         android:text="Clear Locations"
         android:id="@+id/clearLocations"
+        android:layout_below="@+id/editLocation"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginLeft="10dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="cluster Trip"
+        android:id="@+id/clusterTrip"
         android:layout_below="@+id/locationList"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
 </RelativeLayout>
