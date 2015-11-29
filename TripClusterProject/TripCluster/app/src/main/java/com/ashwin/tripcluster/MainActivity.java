@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static double longitude;
     LocationDBHelper dbHelper;
     boolean reloadSavedLocations;
+    public ArrayList<Locations> locationArray = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 //showMessage("Success", "Location added to trip");
                 dbHelper.addLocation(editLocation.getText().toString(), latitude, longitude);
+                locationArray.add(new Locations(editLocation.getText().toString(), latitude, longitude));
                 ListView locationList = (ListView) findViewById(R.id.locationList);
                 Cursor cursor = dbHelper.getLocations();
                 LocationsCursorAdapter adapter = new LocationsCursorAdapter(getApplicationContext(), cursor, 0);
