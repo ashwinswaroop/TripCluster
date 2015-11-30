@@ -31,10 +31,11 @@ public class MainActivity extends AppCompatActivity {
     public static double longitude;
     LocationDBHelper dbHelper;
     boolean reloadSavedLocations;
-    public ArrayList<Locations> locationArray = new ArrayList<>();
+    public static ArrayList<Locations> locationArray;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        locationArray = new ArrayList<Locations>();
         dbHelper = new LocationDBHelper(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -90,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                 LocationsCursorAdapter adapter = new LocationsCursorAdapter(getApplicationContext(), cursor, 0);
                 locationList.setAdapter(adapter);
                 adapter.changeCursor(cursor);
-                editLocation.setText("Enter New Location");
+                editLocation.setText("");
             }
         });
         clearLocations.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         clusterTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                KMeansCluster.cluster(locationArray, 2);
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(intent);
             }

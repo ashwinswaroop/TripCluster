@@ -46,7 +46,7 @@ public class Locations {
 
 
     public void createDist(ArrayList<Locations> loc){
-            for(int j=0; j<5; j++) {
+            for(int j=0; j<loc.size(); j++) {
                 dist[j] = DistanceCalculator.distance(loc.get(0).getLatitutde(), loc.get(0).getLongitude(), loc.get(j).getLatitutde(), loc.get(j).getLongitude(), "K");
                 distMatrix.add(dist[j]);
             }
