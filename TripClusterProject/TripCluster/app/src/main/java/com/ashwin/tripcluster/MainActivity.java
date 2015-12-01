@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         LocationsCursorAdapter adapter = new LocationsCursorAdapter(getApplicationContext(), cursor, 0);
         locationList.setAdapter(adapter);
         adapter.changeCursor(cursor);
-        editLocation.setText("Enter New Location");
+        //editLocation.setText("Enter New Location");
         editLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
