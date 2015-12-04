@@ -45,11 +45,18 @@ public class Locations {
     }
 
 
-    public void createDist(ArrayList<Locations> loc){
-            for(int j=0; j<loc.size(); j++) {
-                dist[j] = DistanceCalculator.distance(loc.get(0).getLatitutde(), loc.get(0).getLongitude(), loc.get(j).getLatitutde(), loc.get(j).getLongitude(), "K");
-                distMatrix.add(dist[j]);
+    public int getMaxDist(ArrayList<Locations> loc){
+        double max=0;
+        double temp=0;
+        int maxloc=0;
+        for(int j=0; j<loc.size(); j++) {
+            temp = DistanceCalculator.distance(loc.get(0).getLatitutde(), loc.get(0).getLongitude(), loc.get(j).getLatitutde(), loc.get(j).getLongitude(), "K");
+            if(temp>max){
+                max=temp;
+                maxloc=j;
             }
+        }
+        return maxloc;
     }
 
     public List<Double> getDistMatrix() {

@@ -49,7 +49,6 @@ public class LocationDBHelper extends SQLiteOpenHelper {
         rowData.put (COLUMN_LAT, latitude);
         rowData.put (COLUMN_LONG, longitude);
         retVal = db.insert(TABLE_NAME, null, rowData);
-
         return retVal;
     }
 

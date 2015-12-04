@@ -9,6 +9,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -39,13 +40,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Double latitude;
         Double longitude;
         LatLng location = null;
+        /*
         dbHelper = new LocationDBHelper(getApplicationContext());
         Cursor cursor  = dbHelper.getLocations();
         while(cursor.moveToNext()){
             latitude = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(dbHelper.COLUMN_LAT)));
             longitude = Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(dbHelper.COLUMN_LONG)));
             location = new LatLng(latitude, longitude);
-            mMap.addMarker(new MarkerOptions().position(location).title("Marker"));
+            mMap.addMarker(new MarkerOptions().position(location).title("Marker").snippet("Cluster").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+        }
+        */
+        for(int i=0;i<KMeansCluster.cCount;i++){
+            for(int k=0;k<MainActivity.cList.get(i).cluster.size();k++){
+                //Log.v("Cluster", MainActivity.cList.get(i).cluster.get(k).getName());
+                latitude = MainActivity.cList.get(i).cluster.get(k).getLatitutde();
+                longitude = MainActivity.cList.get(i).cluster.get(k).getLongitude();
+                location = new LatLng(latitude, longitude);
+                mMap.addMarker(new MarkerOptions().position(location).title("Marker").snippet("Cluster").icon(BitmapDescriptorFactory.defaultMarker((i+1)*60.0f)));
+
+            }
+            //Log.v("Cluster", "End");
         }
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(location, 7.0f));

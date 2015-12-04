@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     LocationDBHelper dbHelper;
     boolean reloadSavedLocations;
     public static ArrayList<Locations> locationArray;
+    public static ArrayList<Clusters> cList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         clusterTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                KMeansCluster.cluster(locationArray, 2);
+                cList = KMeansCluster.cluster(locationArray, 3);
                 Intent intent = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(intent);
             }
